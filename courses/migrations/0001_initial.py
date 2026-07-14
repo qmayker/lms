@@ -48,7 +48,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('edited', models.DateTimeField(auto_now=True)),
-                ('order', core.fields.OrderedField()),
+                ('order', core.fields.OrderedField(field_name='course')),
                 ('name', models.CharField()),
                 ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='modules', to='courses.course')),
             ],

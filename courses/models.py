@@ -18,7 +18,7 @@ class Course(TimeTrackModel):
 
 class Module(TimeTrackModel):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="modules")
-    order = OrderedField()
+    order = OrderedField(field_name="course")
     name = models.CharField()
 
     class Meta:
