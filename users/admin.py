@@ -4,4 +4,8 @@ from .models import User
 
 # Register your models here.
 
-admin.site.register(User, UserAdmin)
+
+@admin.register(User)
+class CustomUserAdmin(UserAdmin):
+    fieldsets = UserAdmin.fieldsets + (("additional_info", {"fields": ("role",)}),)
+    add_fieldsets = UserAdmin.add_fieldsets + ((None, {"fields": ("role",)}),)

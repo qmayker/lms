@@ -1,12 +1,12 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from .choices import TextChoices
+from .choices import UserRole
 
 # Create your models here.
 
 
 class User(AbstractUser):
-    role = models.CharField(choices=TextChoices)
+    role = models.CharField(choices=UserRole.choices, default=UserRole.STUDENT)
 
 
 class StudentProfile(models.Model):
