@@ -8,6 +8,9 @@ from .choices import UserRole
 class User(AbstractUser):
     role = models.CharField(choices=UserRole.choices, default=UserRole.STUDENT)
 
+    class Meta:
+        indexes = [models.Index(fields=["role"])]
+
 
 class StudentProfile(models.Model):
     user = models.OneToOneField(
