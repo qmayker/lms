@@ -12,3 +12,4 @@ class Group(models.Model):
         "courses.Course", on_delete=models.CASCADE, related_name="groups"
     )
     name = models.CharField()
+    created = models.DateTimeField(auto_now_add=True)
