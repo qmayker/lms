@@ -15,6 +15,9 @@ class Course(TimeTrackModel):
     name = models.CharField()
     description = models.TextField()
 
+    def __str__(self):
+        return self.name
+
 
 class Module(TimeTrackModel):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name="modules")
@@ -24,6 +27,9 @@ class Module(TimeTrackModel):
     class Meta:
         ordering = ["order"]
         indexes = [models.Index(fields=["order"])]
+
+    def __str__(self):
+        return self.name
 
 
 class Content(models.Model):
@@ -55,3 +61,6 @@ class ContentItem(TimeTrackModel):
 
 class TextContent(ContentItem):
     text_content = models.TextField()
+
+    def __str__(self):
+        return f"Text content: {self.text_content[:25]}..."
