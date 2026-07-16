@@ -3,7 +3,7 @@ from users.services.user import UserService
 from users.models import User, StudentProfile, TeacherProfile
 from users.choices import UserRole
 from users.types.profiles import StudentProfileData, TeacherProfileData, ProfileData
-from users.exceptions import InvalidRoleError
+from core.exceptions import InvalidRoleError
 
 
 class UserServiceTest(TestCase):

@@ -1,5 +1,5 @@
 from users.choices import UserRole
-from users.exceptions import InvalidRoleError
+from core.exceptions import InvalidRoleError
 from users.models import Profile, User
 from users.types.profiles import ProfileData, StudentProfileData, TeacherProfileData
 from .profiles import create_profile
