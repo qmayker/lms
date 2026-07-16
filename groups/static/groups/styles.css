@@ -1,0 +1,47 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+.page {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 24px;
+}
+
+h1 {
+    margin-bottom: 24px;
+    color: #111827;
+}
+
+.group-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.group-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.group-card h2 {
+    margin-top: 0;
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+}
+
+.group-card p {
+    margin: 6px 0;
+}
+
+.empty {
+    padding: 16px;
+    background: white;
+    border-radius: 8px;
+    display: inline-block;
+}

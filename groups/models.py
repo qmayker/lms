@@ -13,3 +13,6 @@ class Group(models.Model):
     )
     name = models.CharField()
     created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.course} group: {self.name}"

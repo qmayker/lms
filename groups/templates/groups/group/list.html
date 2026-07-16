@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Groups</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'groups/styles.css' %}">
+</head>
+<body>
+    <div class="page">
+        <h1>Groups</h1>
+
+        {% if object_list %}
+            <div class="group-list">
+                {% for group in object_list %}
+                    <div class="group-card">
+                        <h2>{{ group.name }}</h2>
+                        <p><strong>Course:</strong> {{ group.course }}</p>
+                        <p><strong>Created:</strong> {{ group.created|date:"d.m.Y" }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="empty">No groups available.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
