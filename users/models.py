@@ -12,13 +12,16 @@ class User(AbstractUser):
         indexes = [models.Index(fields=["role"])]
 
 
-class StudentProfile(models.Model):
+class Profile(models.Model):
     user = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name="student_profile"
+        User, on_delete=models.CASCADE, related_name="%(class)s"
     )
 
+    class Meta:
+        abstract = True
 
-class TeacherProfile(models.Model):
-    user = models.OneToOneField(
-        User, on_delete=models.CASCADE, related_name="teacher_profile"
-    )
+
+class StudentProfile(Profile): ...
+
+
+class TeacherProfile(Profile): ...
