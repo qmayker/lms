@@ -11,8 +11,16 @@ class Group(models.Model):
     course = models.ForeignKey(
         "courses.Course", on_delete=models.CASCADE, related_name="groups"
     )
-    name = models.CharField()
+    name = models.CharField(unique=True, blank=True, editable=False)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.course} group: {self.name}"
+
+
+class GroupCounter(models.Model):
+    prefix = models.CharField(unique=True)
+    order = models.PositiveIntegerField(default=1)
+
+    class Meta:
+        indexes = [models.Index(fields=["prefix"])]

@@ -18,6 +18,3 @@ class GroupListView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     def get_queryset(self):
         qs = super().get_queryset()
         return self.service.get_queryset(qs=qs)
-    
-# TODO - auto naming group
-# TODO - add __str__
