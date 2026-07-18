@@ -20,8 +20,17 @@ class Profile(models.Model):
     class Meta:
         abstract = True
 
+    def __str__(self) -> str:
+        raise NotImplementedError(
+            f"{self.__class__.__name__} must implement build_name()"
+        )
 
-class StudentProfile(Profile): ...
+
+class StudentProfile(Profile):
+    def __str__(self):
+        return f"Student {self.user.username}"
 
 
-class TeacherProfile(Profile): ...
+class TeacherProfile(Profile):
+    def __str__(self):
+        return f"Teacher {self.user.username}"
