@@ -1,5 +1,6 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db import models
+
 from .choices import UserRole
 
 # Create your models here.
@@ -9,7 +10,7 @@ class User(AbstractUser):
     role = models.CharField(choices=UserRole.choices, default=UserRole.STUDENT)
 
     class Meta:
-        indexes = [models.Index(fields=["role"])]
+        indexes = [models.Index(fields=["role"])]  # noqa: RUF012
 
 
 class Profile(models.Model):

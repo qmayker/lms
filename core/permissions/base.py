@@ -1,26 +1,43 @@
-from typing import Callable
+from abc import ABC, abstractmethod
+from collections.abc import Callable
+
+from core.types import ModelPermissionData
 from django.db.models import Model
-from abc import ABC
 
 
 class PermissionProvider(ABC):
-    model: Model = None
+    @classmethod
+    @abstractmethod
+    def get_permission_funcs(cls) -> list[Callable]: ...
 
-    def __init__(self):
-        self.validate_model()
-        self.permission_funcs = self.get_permission_funcs()
-
-    def get_permission_funcs(self) -> list[Callable]:
-        return []
-
-    def validate_model(self):
-        if self.model is None:
-            raise NotImplementedError()
-
-    def get_permissions(self) -> list[str]:
-        if not self.permission_funcs:
-            raise NotImplementedError()
+    @classmethod
+    def get_permissions(cls, models: list[type[Model]]) -> list[str]:
         permissions = []
-        for permission_func in self.permission_funcs:
-            permissions.append(permission_func())
+        for model in models:
+            for permission_func in cls.get_permission_funcs():
+                permissions.append(permission_func(model))
         return permissions
+
+    @classmethod
+    def get_mro_permissions(cls, mro: tuple[type]):
+        models = cls.get_models(mro=mro)
+        return cls.get_permissions(models=models)
+
+    @staticmethod
+    def get_models(mro: tuple[type]) -> list[type[Model]]:
+        models: list[Model] = []
+        for base in reversed(mro):
+            model = base.__dict__.get("model", None)
+            if model is None:
+                continue
+            if model in models:
+                continue
+            models.append(model)
+
+        return models
+
+    @staticmethod
+    def get_model_info(model: Model) -> ModelPermissionData:
+        return ModelPermissionData(
+            app_label=model._meta.app_label, model_name=model._meta.model_name.lower()
+        )

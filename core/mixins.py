@@ -1,6 +1,6 @@
-from django.http import HttpRequest
-from django.core.exceptions import PermissionDenied
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
+from django.http import HttpRequest
 
 
 class BaseRoleRequiredMixin:
