@@ -8,9 +8,17 @@ from .choices import UserRole
 
 class User(AbstractUser):
     role = models.CharField(choices=UserRole.choices, default=UserRole.STUDENT)
+    email = models.EmailField(blank=False, null=False)
+
+    REQUIRED_FIELDS = ["email"]  # noqa: RUF012
 
     class Meta:
         indexes = [models.Index(fields=["role"])]  # noqa: RUF012
+        constraints = [  # noqa: RUF012
+            models.constraints.UniqueConstraint(
+                fields=["email"], name="%(app_label)s_%(class)s_email_unique"
+            )
+        ]
 
 
 class Profile(models.Model):
