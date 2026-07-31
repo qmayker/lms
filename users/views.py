@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.transaction import atomic
 from django.urls import reverse
 from django.views.generic import CreateView, DetailView
@@ -6,14 +7,19 @@ from users.types.profiles import ProfileData
 
 from .forms import UserCreationForm
 from .models import User
-from .services import profile_create_register, role_user_create_register
+from .services import (
+    RoleUserCreateService,
+    profile_create_register,
+    role_user_create_register,
+)
 
-# TODO - Login, Profile creation with email, Permissions.
+# TODO - Profile creation with email
 
 
-class UserCreationView(CreateView):
+class UserCreationView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     template_name = "users/user/create.html"
     form_class = UserCreationForm
+    permission_required = RoleUserCreateService.permissions()
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

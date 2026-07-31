@@ -13,8 +13,9 @@ class BaseCreateService(ABC):
     role: UserRole = None
 
     @classmethod
-    def mro(cls):
-        return cls.__mro__
+    def permissions(cls):
+        return cls.provider.get_mro_permissions(cls.__mro__)
 
-    def can_create(self, user: User) -> bool:
-        return user.has_perms(self.provider.get_mro_permissions(mro=self.mro()))
+    @classmethod
+    def can_create(cls, user: User) -> bool:
+        return user.has_perms(cls.permissions())
