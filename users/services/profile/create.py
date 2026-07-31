@@ -11,8 +11,11 @@ from users.types.profiles import ProfileData
 class ProfileCreateService(BaseCreateService, ABC):
     model: Profile
 
+    def __init__(self, user_id: int):
+        self.user_id = user_id
+
     def create(self, data: ProfileData, save: bool = True) -> Model:
-        obj = self.model(**asdict(data))
+        obj = self.model(user_id=self.user_id, **asdict(data))
         if save:
             obj.save()
         return obj

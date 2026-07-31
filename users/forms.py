@@ -10,7 +10,7 @@ class UserCreationForm(CreationForm):
 
     class Meta(CreationForm.Meta):
         model = User
-        fields = ("username",)
+        fields = ("username", "email")
 
     def __init__(self, *args, roles: list[tuple[str]], **kwargs):
         super().__init__(*args, **kwargs)

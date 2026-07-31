@@ -10,6 +10,6 @@ from .create import ProfileCreateService
 class ProfileCreateRegistry(RoleRegistry[type[ProfileCreateService]]):
     DATA: ClassVar = {}
 
-    def create(self, data: ProfileData, role: UserRole):
-        service = self.get_by_role(role)()
+    def create(self, data: ProfileData, role: UserRole, user_id: int):
+        service = self.get_by_role(role)(user_id=user_id)
         service.create(data=data)

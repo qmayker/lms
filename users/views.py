@@ -32,7 +32,7 @@ class UserCreationView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     def form_valid(self, form: UserCreationForm):
         res = super().form_valid(form)
         profile_create_register.create(
-            data=ProfileData(user_id=self.object.id), role=self.object.role
+            data=ProfileData(), role=self.object.role, user_id=self.request.user.id
         )
         return res
 

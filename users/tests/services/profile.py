@@ -26,11 +26,11 @@ class ProfileCreateTest(TestCase):
         ]
         for service, expected in cases:
             with self.subTest(service=service):
-                self.assertEqual(service().can_create(user=self.admin), expected)
+                self.assertEqual(service(user_id=self.admin.id).can_create(user=self.admin), expected)
 
     def test_create(self):
-        student_profile = StudentProfileCreateService().create(
-            ProfileData(user_id=self.student.id)
+        student_profile = StudentProfileCreateService(user_id=self.student.id).create(
+            ProfileData()
         )
         self.assertIsInstance(student_profile, StudentProfile)
         self.assertEqual(student_profile.user, self.student)
