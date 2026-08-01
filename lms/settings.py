@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "courses.apps.CoursesConfig",
     "users.apps.UsersConfig",
     "groups.apps.GroupsConfig",
+    "registration.apps.RegistrationConfig",
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,5 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "users.backends.EmailBackend",
 ]
+
+LOGIN_URL = '/login/'

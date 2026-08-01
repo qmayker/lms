@@ -13,7 +13,7 @@ from .services import (
     role_user_create_register,
 )
 
-# TODO - add celery email when user created. 
+# TODO - add celery email when user created.
 
 
 class UserCreationView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
