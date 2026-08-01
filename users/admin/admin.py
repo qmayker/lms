@@ -44,8 +44,8 @@ class CustomUserAdmin(UserAdmin):
         super().save_model(request, obj, form, change)
 
         if not change:
-            service = profile_create_register.get_by_role(role=obj.role)()
-            service.create(data=ProfileData(user_id=obj.id))
+            service = profile_create_register.get_by_role(role=obj.role)(obj.id)
+            service.create(data=ProfileData())
 
     def get_inlines(self, request, obj: User | None):
         inlines = super().get_inlines(request, obj)
