@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.transaction import atomic
 from django.urls import reverse
 from django.views.generic import CreateView, DetailView
@@ -7,6 +7,7 @@ from users.types.profiles import ProfileData
 
 from .forms import UserCreationForm
 from .models import User
+from .permissions import UserCreatePermissionRequiredMixin
 from .services import (
     RoleUserCreateService,
     profile_create_register,
@@ -16,7 +17,9 @@ from .services import (
 # TODO - add celery email when user created.
 
 
-class UserCreationView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+class UserCreationView(
+    LoginRequiredMixin, UserCreatePermissionRequiredMixin, CreateView
+):
     template_name = "users/user/create.html"
     form_class = UserCreationForm
     permission_required = RoleUserCreateService.get_permissions()
@@ -28,14 +31,16 @@ class UserCreationView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
         )
         return kwargs
 
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        return response
+
     @atomic
     def form_valid(self, form: UserCreationForm):
         res = super().form_valid(form)
         profile_service_class = profile_create_register.get_by_role(self.object.role)
         profile_service = profile_service_class(user_id=self.request.user.id)
-        profile_service.create(
-            data=ProfileData()
-        )
+        profile_service.create(data=ProfileData())
         return res
 
     def get_success_url(self):

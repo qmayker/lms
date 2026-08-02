@@ -14,7 +14,8 @@ class UserCreationForm(CreationForm):
 
     def __init__(self, *args, roles: list[tuple[str]], **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["role"].choices = roles
+        self.roles = roles
+        self.fields["role"].choices = self.roles
         self._delete_help_texts()
 
     def _delete_help_texts(self):
