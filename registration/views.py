@@ -7,3 +7,9 @@ from .forms import EmailLoginForm
 
 class UserLoginView(LoginView):
     form_class = EmailLoginForm
+
+    def form_valid(self, form):
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        return super().form_invalid(form)

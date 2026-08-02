@@ -1,11 +1,6 @@
 {% extends "base.html" %}
-{% load static %}
 
 {% block title %}Sign in{% endblock %}
-
-{% block extra_css %}
-    <link rel="stylesheet" href="{% static 'registration/styles.css' %}">
-{% endblock %}
 
 {% block content %}
     <div class="auth-shell">
@@ -37,13 +32,13 @@
             <form method="post" action="{% url 'registration:login' %}" novalidate>
                 {% csrf_token %}
 
-                <div class="form-field {% if form.email.errors %}has-error{% endif %}">
-                    <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
-                    {{ form.email }}
-                    {% if form.email.errors %}
+                <div class="form-field {% if form.username.errors %}has-error{% endif %}">
+                    <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
                         <div class="field-errors">
                             <ul class="errorlist">
-                                {% for error in form.email.errors %}
+                                {% for error in form.username.errors %}
                                     <li>{{ error }}</li>
                                 {% endfor %}
                             </ul>
