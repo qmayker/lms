@@ -31,8 +31,10 @@ class UserCreationView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     @atomic
     def form_valid(self, form: UserCreationForm):
         res = super().form_valid(form)
-        profile_create_register.create(
-            data=ProfileData(), role=self.object.role, user_id=self.request.user.id
+        profile_service_class = profile_create_register.get_by_role(self.object.role)
+        profile_service = profile_service_class(user_id=self.request.user.id)
+        profile_service.create(
+            data=ProfileData()
         )
         return res
 
