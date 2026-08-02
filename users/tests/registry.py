@@ -63,12 +63,12 @@ class RegistryTest(TestCase):
 
 
 class AllowCreate:
-    def can_create(self, user):
+    def has_permissions(self, user):
         return True
 
 
 class DenyCreate:
-    def can_create(self, user):
+    def has_permissions(self, user):
         return False
 
 

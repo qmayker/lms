@@ -1,7 +1,9 @@
-from core.services import BaseCreateService
+from core.permissions import CreatePermissionProvider
+from core.services import BaseService
 
 from users.models import User
 
 
-class RoleUserCreateService(BaseCreateService):
+class RoleUserCreateService(BaseService):
     model = User
+    provider = CreatePermissionProvider

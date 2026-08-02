@@ -21,21 +21,18 @@ class BaseService(ABC):
         return cls.provider.get_mro_permissions(cls.__mro__)
 
     @classmethod
-    def has_permissions(self, user: User) -> bool:
-        return user.has_perms(self.get_permissions())
+    def has_permissions(cls, user: User) -> bool:
+        return user.has_perms(cls.get_permissions())
 
 
-class BaseCreateService(BaseService):
+class BaseCreateService(BaseService, ABC):
     provider = CreatePermissionProvider
-
-    def can_create(self, user: User) -> bool:
-        return self.has_permissions(user=user)
 
     @abstractmethod
     def create(self, data: object, save: bool): ...
 
 
-class BaseViewService(BaseService):
+class BaseViewService(BaseService, ABC):
     provider = ViewPermissionProvider
 
     @abstractmethod

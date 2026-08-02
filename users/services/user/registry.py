@@ -13,7 +13,7 @@ class RoleUserCreateRegistry(RoleRegistry[type[RoleUserCreateService]]):
         roles = []
         for role, service_type in self.DATA.items():
             service = service_type()
-            if not service.can_create(user=user):
+            if not service.has_permissions(user=user):
                 continue
             roles.append((role.value, role.label))
         return roles

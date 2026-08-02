@@ -31,7 +31,7 @@ class ProfileCreateTest(TestCase):
         for service, expected in cases:
             with self.subTest(service=service):
                 self.assertEqual(
-                    service(user_id=self.admin.id).can_create(user=self.admin), expected
+                    service(user_id=self.admin.id).has_permissions(user=self.admin), expected
                 )
 
     def test_create(self):

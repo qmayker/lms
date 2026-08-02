@@ -25,7 +25,8 @@ class User(AbstractUser):
             "unique": _("A user with that username already exists."),
         },
     )
-
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['username']
     class Meta:
         indexes = [models.Index(fields=["role"])]  # noqa: RUF012
         constraints = [  # noqa: RUF012
