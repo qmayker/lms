@@ -1,10 +1,10 @@
-from users.models import User
-from .base import BaseUserGroupService
+from users.choices import UserRole
+
+from .base import BaseGroupUserViewService
 
 
-class TeacherGroupService(BaseUserGroupService):
-    def __init__(self, user: User):
-        super().__init__(user=user)
+class GroupTeacherViewService(BaseGroupUserViewService):
+    role = UserRole.TEACHER
 
-    def get_queryset(self, qs):
+    def filter_for_user(self, qs):
         return qs.filter(teacher=self.user.teacherprofile)

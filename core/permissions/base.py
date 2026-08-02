@@ -19,6 +19,10 @@ class PermissionProvider(ABC):
         return permissions
 
     @classmethod
+    def get_permission(cls, data: ModelPermissionData, prefix: str):
+        return f"{data.app_label}.{prefix}_{data.model_name}"
+
+    @classmethod
     def get_mro_permissions(cls, mro: tuple[type]):
         models = cls.get_models(mro=mro)
         return cls.get_permissions(models=models)
@@ -33,7 +37,8 @@ class PermissionProvider(ABC):
             if model in models:
                 continue
             models.append(model)
-
+        if not models:
+            raise NotImplementedError()
         return models
 
     @staticmethod

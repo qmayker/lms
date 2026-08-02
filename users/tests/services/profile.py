@@ -12,12 +12,16 @@ from users.types.profiles import ProfileData
 
 class ProfileCreateTest(TestCase):
     def setUp(self):
-        self.admin = User.objects.create(username="admin")
+        self.admin = User.objects.create(username="admin", email="admin@gmail.com")
         permissions = Permission.objects.filter(codename__in=["add_studentprofile"])
         self.admin.user_permissions.set(permissions)
 
-        self.student = User.objects.create(username="student", role=UserRole.STUDENT)
-        self.teacher = User.objects.create(username="teacher", role=UserRole.TEACHER)
+        self.student = User.objects.create(
+            username="student", role=UserRole.STUDENT, email="student@gmail.com"
+        )
+        self.teacher = User.objects.create(
+            username="teacher", role=UserRole.TEACHER, email="teacher@gmail.com"
+        )
 
     def test_can_create(self):
         cases = [
@@ -26,7 +30,9 @@ class ProfileCreateTest(TestCase):
         ]
         for service, expected in cases:
             with self.subTest(service=service):
-                self.assertEqual(service(user_id=self.admin.id).can_create(user=self.admin), expected)
+                self.assertEqual(
+                    service(user_id=self.admin.id).can_create(user=self.admin), expected
+                )
 
     def test_create(self):
         student_profile = StudentProfileCreateService(user_id=self.student.id).create(

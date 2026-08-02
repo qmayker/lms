@@ -19,7 +19,7 @@ from .services import (
 class UserCreationView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     template_name = "users/user/create.html"
     form_class = UserCreationForm
-    permission_required = RoleUserCreateService.permissions()
+    permission_required = RoleUserCreateService.get_permissions()
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
