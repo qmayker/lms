@@ -10,9 +10,9 @@ from .validators import UsernameValidator
 
 class User(AbstractUser):
     role = models.CharField(choices=UserRole.choices, default=UserRole.STUDENT)
-    email = models.EmailField(blank=False, null=False)
-
-    REQUIRED_FIELDS = ["email"]  # noqa: RUF012
+    email = models.EmailField(
+        blank=False, null=False, max_length=100, verbose_name=_("email")
+    )
     username = models.CharField(
         _("username"),
         max_length=150,
